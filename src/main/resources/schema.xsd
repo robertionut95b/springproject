@@ -1,1 +1,23 @@
-<xml></xml>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://streetshirt.xyz/soap" targetNamespace="http://streetshirt.xyz/soap" elementFormDefault="qualified">
+
+    <xs:complexType name="InvoiceInfo">
+        <xs:sequence>
+            <xs:element name="company" type="xs:string"/>
+            <xs:element name="service" type="xs:string"/>
+            <xs:element name="date" type="xs:dateTime"/>
+            <xs:element name="price" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getAllInvoicesRequest">
+        <xs:complexType />
+    </xs:element>
+
+    <xs:element name="getAllInvoicesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="invoice" type="tns:InvoiceInfo" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
