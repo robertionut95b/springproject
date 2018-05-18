@@ -1,10 +1,14 @@
 package invoices.config;
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+import org.springframework.ws.transport.http.MessageDispatcherServlet;
+import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
@@ -12,10 +16,23 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-    /*@Bean
+    @Bean
     public ServletRegistrationBean invoiceDispatcherServlet(ApplicationContext context) {
-        InvoiceDispatcherServlet servlet = new InvoiceDispatcherServlet();
-    }*/
+        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+        servlet.setApplicationContext(context);
+        servlet.setTransformWsdlLocations(true);
+        return new ServletRegistrationBean(servlet, "/inv/*");
+    }
+
+    @Bean(name = "invoice")
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema invoiceSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("InvoiceEndpoint");
+        wsdl11Definition.setLocationUri("/inv");
+        wsdl11Definition.setTargetNamespace("http://streetshirt.xyz/soap");
+        wsdl11Definition.setSchema(invoiceSchema);
+        return wsdl11Definition;
+    }
 
     @Bean
     public XsdSchema invoiceSchema() {

@@ -1,15 +1,19 @@
 package invoices.endpoint;
 
+import invoices.objects.Invoice;
 import invoices.repositories.InvoiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import xyz.streetshirt.soap.GetAllInvoicesResponse;
-import xyz.streetshirt.soap.Invoice;
 import xyz.streetshirt.soap.InvoiceInfo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,5 +39,17 @@ public class InvoiceEndpoint {
         }
         response.getInvoice().addAll(invoiceList);
         return response;
+    }
+
+    @GetMapping(path="/add")
+    public @ResponseBody String addNewInvoice (@RequestParam String company, @RequestParam String service, @RequestParam LocalDateTime date,
+                                               @RequestParam Float price) {
+        Invoice invoice = new Invoice();
+        invoice.setCompany(company);
+        invoice.setService(service);
+        invoice.setPrice(price);
+        invoice.setDate(date);
+        invoiceRepository.save(invoice);
+        return "Invoice added";
     }
 }
