@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import xyz.streetshirt.soap.GetAllInvoicesResponse;
-import xyz.streetshirt.soap.InvoiceInfo;
+import xyz.streetshirt.soap.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class InvoiceEndpoint {
     }
 
     @GetMapping(path="/add")
-    public @ResponseBody String addNewInvoice (@RequestParam String company, @RequestParam String service, @RequestParam LocalDateTime date,
+    public @ResponseBody String addNewInvoice (@RequestParam String company, @RequestParam String service, @RequestParam String date,
                                                @RequestParam Float price) {
         Invoice invoice = new Invoice();
         invoice.setCompany(company);

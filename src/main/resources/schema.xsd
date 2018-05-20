@@ -2,9 +2,10 @@
 
     <xs:complexType name="InvoiceInfo">
         <xs:sequence>
+            <xs:element name="Id" type="xs:long"/>
             <xs:element name="company" type="xs:string"/>
             <xs:element name="service" type="xs:string"/>
-            <xs:element name="date" type="xs:dateTime"/>
+            <xs:element name="date" type="xs:string"/>
             <xs:element name="price" type="xs:float"/>
         </xs:sequence>
     </xs:complexType>

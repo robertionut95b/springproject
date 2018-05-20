@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.xslt.XsltViewResolver;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
@@ -35,7 +37,15 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean
+    public ViewResolver xsltViewResolver() {
+        XsltViewResolver viewResolver = new XsltViewResolver();
+        viewResolver.setPrefix("/resources/");
+        viewResolver.setSuffix(".xsl");
+        return viewResolver;
+    }
+
+    @Bean
     public XsdSchema invoiceSchema() {
-        return new SimpleXsdSchema((new ClassPathResource("schema.xsd")));
+        return new SimpleXsdSchema(new ClassPathResource("schema.xsd"));
     }
 }

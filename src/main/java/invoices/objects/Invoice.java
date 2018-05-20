@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,7 +16,7 @@ public class Invoice {
     private Long Id;
     private String company;
     private String service;
-    private LocalDateTime date;
+    private String date;
     private Float price;
 
     public Long getId() {
@@ -44,11 +43,11 @@ public class Invoice {
         this.service = service;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
